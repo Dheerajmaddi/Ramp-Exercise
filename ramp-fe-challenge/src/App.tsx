@@ -48,6 +48,9 @@ export function App() {
       loadAllTransactions()
     }
   }, [employeeUtils.loading, employees, loadAllTransactions])
+  
+  // To check the value of transactionsByEmployee
+  // console.log("TBE: " + JSON.stringify(transactionsByEmployee))
 
   return (
     <Fragment>
@@ -85,8 +88,11 @@ export function App() {
 
         <div className="RampGrid">
           <Transactions transactions={transactions} />
-
-          {transactions !== null && (
+          
+          {/* Bug 6 Fixed [View more button not working as expected] */}
+          {/* Part 1 and Part 2 both are fixed */}
+          {/* Added two more conditions: [transactionsByEmployee === null] to resolve Part-1 and [paginatedTransactions?.nextPage !==null] to resolve Part-2*/}
+          {transactions !== null && transactionsByEmployee === null && paginatedTransactions?.nextPage !== null && (
             <button
               className="RampButton"
               disabled={paginatedTransactionsUtils.loading}
