@@ -61,11 +61,17 @@ export function App() {
             label: `${item.firstName} ${item.lastName}`,
           })}
           onChange={async (newValue) => {
+            console.log("New Value: " + JSON.stringify(newValue));
+            
             if (newValue === null) {
               return
             }
-
-            await loadTransactionsByEmployee(newValue.id)
+            // Bug 3 Fixed [Cannot select all Employees after selecting an employee]
+            // On selecting All Employees from drop-down list id becomes empty string, which should load all transations
+            if (newValue.id === "")
+              await loadAllTransactions()
+            else
+              await loadTransactionsByEmployee(newValue.id)
           }}
         />
 

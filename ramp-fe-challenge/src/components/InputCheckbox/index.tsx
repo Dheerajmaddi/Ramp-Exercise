@@ -12,7 +12,7 @@ export const InputCheckbox: InputCheckboxComponent = ({
 
   return (
     <div className="RampInputCheckbox--container" data-testid={inputId}>
-      {/* Fixed Bug 2: toggle action working as expected now*/}
+      {/* Fixed Bug 2: [Approve checkbox not working] toggle action working as expected now*/}
       {/* Added htmlFor attribute to label tag as the input tag is not displayed on the screen */}
       <label
         htmlFor={inputId}
