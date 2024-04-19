@@ -57,4 +57,5 @@ export const setTransactionApproval = ({ transactionId, value }: SetTransactionA
   }
 
   transaction.approved = value
+  // console.log("Approve value changed........")
 }

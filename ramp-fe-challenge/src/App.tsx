@@ -21,9 +21,9 @@ export function App() {
 
   const loadAllTransactions = useCallback(async () => {
     setIsLoading(true)
-    transactionsByEmployeeUtils.invalidateData()
-
+    // transactionsByEmployeeUtils.invalidateData()
     await employeeUtils.fetchAll()
+        
     // Bug 5 Fixed [Employees filter not available during loading more data]
     // Fixed two wrong behaviors 
     // Updated functionality
@@ -31,14 +31,20 @@ export function App() {
     // 2. When View More Button is clicked filter does not show "Loading employees.." as this data is already loaded
     setIsLoading(false)
     await paginatedTransactionsUtils.fetchAll()
+    // Bug 7 Fixed [Approving a transaction won't persist the new value]
+    // The placement of transactionsByEmployeeUtils.invalidateData() after fetching new data will also include old values, this way the data will be persistent
+    transactionsByEmployeeUtils.invalidateData()
 
     // setIsLoading(false)
   }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
 
   const loadTransactionsByEmployee = useCallback(
     async (employeeId: string) => {
-      paginatedTransactionsUtils.invalidateData()
+      // paginatedTransactionsUtils.invalidateData()
       await transactionsByEmployeeUtils.fetchById(employeeId)
+      // Bug 7 Fixed [Approving a transaction won't persist the new value]
+      // The placement of paginatedTransactionUtils.invalidateData() after fetching new data will also include old values, this way the data will be persistent
+      paginatedTransactionsUtils.invalidateData()
     },
     [paginatedTransactionsUtils, transactionsByEmployeeUtils]
   )
