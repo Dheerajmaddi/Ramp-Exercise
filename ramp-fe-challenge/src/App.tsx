@@ -24,9 +24,15 @@ export function App() {
     transactionsByEmployeeUtils.invalidateData()
 
     await employeeUtils.fetchAll()
+    // Bug 5 Fixed [Employees filter not available during loading more data]
+    // Fixed two wrong behaviors 
+    // Updated functionality
+    // 1. Initially filter stops showing "Loading employees.." as soon as employees is succeeded
+    // 2. When View More Button is clicked filter does not show "Loading employees.." as this data is already loaded
+    setIsLoading(false)
     await paginatedTransactionsUtils.fetchAll()
 
-    setIsLoading(false)
+    // setIsLoading(false)
   }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
 
   const loadTransactionsByEmployee = useCallback(
