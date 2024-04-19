@@ -21,8 +21,12 @@ export function usePaginatedTransactions(): PaginatedTransactionsResult {
       if (response === null || previousResponse === null) {
         return response
       }
-
-      return { data: response.data, nextPage: response.nextPage }
+      // Bug Fixed 4 [Clicking on View More button not showing correct data]
+      // Solution: Using spread operator previous transactions are concatenated with next five new transactions
+      // Initial transactions and new transactions are displayed
+      console.log("Updated Transcations Data")
+      console.log({data: [...previousResponse.data, ...response.data], nextPage: response.nextPage})
+      return {data: [...previousResponse.data, ...response.data], nextPage: response.nextPage}
     })
   }, [fetchWithCache, paginatedTransactions])
 
